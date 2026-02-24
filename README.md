@@ -29,10 +29,13 @@ Upload CXR → Visual Analysis → Triage → Report → Patient Summary → Saf
 Demonstration only. Not a medical device. 
 All outputs must be verified by a qualified radiologist.
 
-Challenges, Limitations & Deployment Plan
+Product Feasibility, Challenges & Edge Deployment:
+Built for the MedGemma Impact Challenge, ChestAI Copilot demonstrates how multimodal LLMs can be constrained with strict programmatic guardrails to provide safe, transparent, and immediate radiological triage.
 
-Current Limitations: MedGemma 1.5 is a highly capable foundational model, but it can occasionally suffer from "list negation bugs" (e.g., generating "no pleural effusion," which naive systems misinterpret). We mitigated this by building a custom, regex-based sentence-level negation scanner into our Python triage agent.
+Edge AI & Impact: The entire 4B parameter model and pipeline are lightweight enough to run entirely on the "Edge" using a single, free NVIDIA T4 GPU. This makes life-saving AI accessible to resource-constrained and rural clinics worldwide, ensuring zero patient data ever needs to leave the facility's local network.
 
-Performance Analysis: In our testing across Normal, Pneumonia, Cardiomegaly, and Severe Pulmonary Edema cases, the agent accurately identified key visual features and triaged them correctly 100% of the time. Total pipeline execution averages ~40 seconds on a single NVIDIA T4 GPU.
+Mitigating Model Limitations: MedGemma 1.5 is highly capable, but standard LLMs can occasionally suffer from "list negation bugs" (e.g., generating "no pleural effusion," which naive text-matching systems misinterpret as a positive finding). We overcame this by engineering a custom, regex-based sentence-level negation scanner into our Python triage agent.
 
-Deployment Challenges: The primary challenge in real-world deployment is integration with legacy hospital PACS (Picture Archiving and Communication Systems). To overcome this, future iterations of ChestAI Copilot will wrap the Gradio app in a FastAPI backend equipped with a DICOMweb standard listener, allowing the agent to automatically pull imaging studies directly from the hospital's internal network, ensuring zero data leaves the edge facility.
+Performance: In testing across Normal, Pneumonia, Cardiomegaly, and Severe Pulmonary Edema cases, the agent accurately identified key visual features and triaged them correctly 100% of the time, executing the full 5-step pipeline in an average of ~40 seconds.
+
+Future Integration: To overcome real-world deployment challenges, future iterations of ChestAI Copilot will wrap the Gradio app in a FastAPI backend equipped with a DICOMweb standard listener. This will allow the agent to automatically pull imaging studies directly from the hospital's legacy PACS (Picture Archiving and Communication Systems) without manual uploads.
